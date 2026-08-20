@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Diabetes Prediction System</title>
+    <!-- Theme Initializer to prevent flickering -->
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+        })();
+    </script>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="split-container animated-fade">
+        <!-- Left Side: Illustration Panel -->
+        <div class="split-left d-none d-lg-flex">
+            <img src="{{ url_for('static', filename='images/login.png') }}" class="mb-4" alt="Login Security Illustration">
+            <h2 class="fw-bold mt-2">Secure Patient Portal</h2>
+            <p class="text-center text-white-50" style="font-size: 15px; max-width: 400px; line-height: 1.7;">
+                Enter your credentials to securely manage your personal diagnostics profile, check risk history trend charts, and schedule appointments.
+            </p>
+        </div>
+
+        <!-- Right Side: Login Card -->
+        <div class="split-right position-relative">
+            <!-- Floated Theme Toggler -->
+            <div style="position: absolute; top: 24px; right: 24px; z-index: 10;">
+                <button id="themeToggleBtn" title="Toggle Theme">
+                    <i class="bi bi-moon-fill" id="themeToggleIcon"></i>
+                </button>
+            </div>
+
+            <div class="card-premium w-100" style="max-width: 455px; padding: 40px;">
+                <div class="text-center mb-4">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" width="50" class="mb-3" alt="Logo">
+                    <h3 class="fw-bold">Welcome Back</h3>
+                    <p class="text-muted small">Login using email or mobile number to continue</p>
+                </div>
+
+                <!-- Flash Messages Banner -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    <div class="alert-container p-0 mb-3 w-100">
+                      {% for category, message in messages %}
+                        <div class="alert-msg alert-{{ category }} m-0">
+                          <i class="bi bi-exclamation-triangle"></i>
+                          <span>{{ message }}</span>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                {% endwith %}
+
+                <form action="/login" method="POST">
+                    <!-- Email or Mobile -->
+                    <div class="form-group-custom">
+                        <label class="mb-1">Email or Mobile Number</label>
+                        <input type="text" class="form-control-custom" name="username" placeholder="Enter Email or Mobile" required>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group-custom">
+                        <label class="mb-1">Password</label>
+                        <div class="position-relative">
+                            <input type="password" id="password" class="form-control-custom" name="password" placeholder="Enter Password" required style="padding-right: 45px;">
+                            <i class="bi bi-eye-slash position-absolute" id="togglePassword" style="right: 18px; top: 14px; cursor: pointer; color: var(--text-muted); font-size: 18px;"></i>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-4" style="font-size: 14px;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe" style="border-radius: 4px; border: 1.5px solid var(--border-color);">
+                            <label class="form-check-label text-muted" for="rememberMe">Remember Me</label>
+                        </div>
+                        <a href="#" class="text-primary text-decoration-none fw-semibold">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-premium w-100 py-3">
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                    </button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted small mb-0">Don't have an account? <a href="/signup" class="text-primary fw-semibold text-decoration-none">Create Account</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

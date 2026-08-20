@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction System</title>
+    <!-- Theme Initializer to prevent flickering -->
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+        })();
+    </script>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container-fluid">
+            <a class="logo" href="/">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" width="40" alt="Logo">
+                <h2>Diabetes Prediction System</h2>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li>
+                        <button id="themeToggleBtn" title="Toggle Theme">
+                            <i class="bi bi-moon-fill" id="themeToggleIcon"></i>
+                        </button>
+                    </li>
+                    {% if user_name %}
+                        <li><a href="/dashboard" class="btn-premium px-4" style="padding: 8px 18px; font-size: 14px;">Dashboard</a></li>
+                    {% else %}
+                        <li><a href="/login" class="btn btn-outline-primary px-3" style="border-radius: 10px; font-weight: 500; font-size: 14px; padding: 8px 18px;">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= HERO SECTION ================= -->
+    <section class="hero-section animated-fade">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <span class="badge bg-primary-light text-primary px-3 py-2 rounded-pill mb-3 fw-bold">Advanced Machine Learning Diagnostics</span>
+                    <h1 class="hero-title mb-4">Predict Diabetes Early.<br><span>Live Healthier.</span></h1>
+                    <p class="hero-subtitle mb-5">
+                        Our advanced machine learning classifier helps you evaluate diabetes risk using key clinical parameters in seconds. Monitor history, track trends, and take proactive control of your wellness.
+                    </p>
+                    <div class="d-flex gap-3 align-items-center">
+                        {% if user_name %}
+                            <a href="/dashboard" class="btn-premium">
+                                <i class="bi bi-speedometer2"></i> Go to Dashboard
+                            </a>
+                        {% else %}
+                            <a href="/login" class="btn-premium">
+                                <i class="bi bi-box-arrow-in-right"></i> Login
+                            </a>
+                            <a href="/signup" class="btn btn-outline-primary btn-lg px-4" style="border-radius: 12px; font-weight: 600; font-size: 15px; padding: 13px 28px;">
+                                <i class="bi bi-person-plus"></i> Sign Up
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="{{ url_for('static', filename='images/diabetes.png') }}" class="img-fluid" style="max-height: 430px; animation: float 6s ease-in-out infinite;" alt="Diabetes Health Chart">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FEATURES ================= -->
+    <section id="features" class="py-5" style="background-color: var(--bg-tertiary); transition: background-color 0.3s ease;">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <span class="badge bg-primary-light text-primary px-3 py-2 rounded-pill mb-2 fw-bold">System Capabilities</span>
+                <h2 class="fw-bold mt-2" style="font-size: 36px;">Features at a Glance</h2>
+                <p class="text-muted">Explore the options available in our complete health prediction portal.</p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Card 1 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card-premium card-hover text-center h-100">
+                        <div class="features-icon-box bg-primary-light text-primary">
+                            <i class="bi bi-heart-pulse-fill fs-3"></i>
+                        </div>
+                        <h4 class="fw-bold fs-5">Early Prediction</h4>
+                        <p class="text-muted small mb-0">Evaluate diabetes risk parameters immediately using standardized logistic regression.</p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card-premium card-hover text-center h-100">
+                        <div class="features-icon-box bg-success-light text-success">
+                            <i class="bi bi-graph-up-arrow fs-3"></i>
+                        </div>
+                        <h4 class="fw-bold fs-5">Prediction History</h4>
+                        <p class="text-muted small mb-0">Track and monitor previous diagnosis logs and progression trends with data line charts.</p>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card-premium card-hover text-center h-100">
+                        <div class="features-icon-box bg-warning-light text-warning">
+                            <i class="bi bi-calendar-check fs-3"></i>
+                        </div>
+                        <h4 class="fw-bold fs-5">Doctor Consultation</h4>
+                        <p class="text-muted small mb-0">Book appointments with medical experts directly from the patient workspace.</p>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card-premium card-hover text-center h-100">
+                        <div class="features-icon-box bg-danger-light text-danger">
+                            <i class="bi bi-chat-dots fs-3"></i>
+                        </div>
+                        <h4 class="fw-bold fs-5">Complaints & Feedback</h4>
+                        <p class="text-muted small mb-0">Log queries, suggestions, and feedback to help us continuously refine the portal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about" class="py-5 bg-white" style="background-color: var(--bg-secondary) !important; transition: background-color 0.3s ease;">
+        <div class="container py-4">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0 text-center">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid" style="max-height: 250px;" alt="Medical Logo">
+                </div>
+                <div class="col-lg-6">
+                    <span class="badge bg-success-light text-success px-3 py-2 rounded-pill mb-2 fw-bold">Technical Insight</span>
+                    <h2 class="fw-bold mb-4" style="font-size: 36px;">About This Project</h2>
+                    <p class="text-muted mb-4" style="line-height: 1.8;">
+                        This system is powered by a <strong>Logistic Regression</strong> machine learning classifier trained on the standard PIMA Indians Diabetes dataset. The model evaluates patient metrics such as glucose tolerance, BMI, insulin response, blood pressure, pedigree function, and age to classify the probability of diabetes.
+                    </p>
+                    <p class="text-muted" style="line-height: 1.8;">
+                        A streamlined backend handles user database integrations, hashed password protection, dynamic line graphs using Chart.js, and appointments management, making it a reliable portal for early health screenings.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <div class="container">
+            <p class="mb-0">© 2026 Diabetes Prediction System | Developed as a Production-Grade Medical Dashboard</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
